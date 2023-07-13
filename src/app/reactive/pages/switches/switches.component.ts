@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-switches',
@@ -6,11 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class SwitchesComponent implements OnInit {
+export class SwitchesComponent   {
 
-  constructor() { }
+  public formSwitches: FormGroup = this.fb.group({
+    gender: ['M', [Validators.required]],
+    wantNotifications: [true,[Validators.required]],
+    termsAndConditions: [false,[Validators.required, Validators.requiredTrue]]
+  })  
+  constructor(private fb: FormBuilder) { }
 
-  ngOnInit(): void {
+
+  onSave(){
+    if(this.formSwitches.invalid){
+      this.formSwitches.markAllAsTouched();
+      return;
+    }
+    console.log(this.formSwitches.value)
   }
+
 
 }
